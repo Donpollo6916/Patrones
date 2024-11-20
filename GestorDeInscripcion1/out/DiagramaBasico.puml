@@ -1,0 +1,20 @@
+@startuml
+class Universidad {
+    - nombre : String
+    - cupoDisponible : int
+    + Universidad(nombre: String, cupoInicial: int)
+    + getNombre() : String
+    + getCupoDisponible() : int
+    + inscribirEstudiante(estudiante: Estudiante) : boolean
+}
+
+class Estudiante {
+    - nombre : String
+    - tieneHistorial : boolean
+    + Estudiante(nombre: String, tieneHistorial: boolean)
+    + getNombre() : String
+    + tieneHistorial() : boolean
+}
+
+Universidad "1" --> "*" Estudiante : "inscribe a"
+@enduml
