@@ -1,0 +1,83 @@
+@startuml
+package "Interfaz" {
+  class GestorInscripcion {
+    +main(args: String[]): void
+  }
+
+  class Estudiante {
+    -nombre: String
+    -historialAcademico: int
+    +Estudiante(nombre: String, historialAcademico: int)
+    +getNombre(): String
+    +getHistorialAcademico(): int
+  }
+
+  class Inscripcion {
+    +inscribir(estudiante: Estudiante, carrera: String): void
+  }
+
+  class InscripcionConHistorial {
+    +inscribir(estudiante: Estudiante, carrera: String): void
+  }
+
+  GestorInscripcion --> Estudiante : crea
+  GestorInscripcion --> Inscripcion : usa
+  Inscripcion <|-- InscripcionConHistorial
+}
+
+package "Singleton" {
+  class Universidad {
+    -instancia: Universidad
+    -carreras: String[]
+    -cupos: int[]
+    -inscripcionObserver: Observador
+    +getInstance(): Universidad
+    +setObservador(observer: Observador): void
+    +inscribirEstudiante(estudiante: Estudiante, carrera: String): void
+  }
+
+  Universidad --> Observador : usa
+  Universidad --> Estudiante : usa
+}
+
+package "Observador" {
+  interface Observador {
+    +notificarInscripcion(estudiante: Estudiante, carrera: String, exito: boolean): void
+  }
+
+  class Notificador {
+    +notificarInscripcion(estudiante: Estudiante, carrera: String, exito: boolean): void
+  }
+
+  Notificador -|> Observador
+}
+
+package "Decorador" {
+  class Estudiante {
+    -nombre: String
+    -historialAcademico: int
+    +Estudiante(nombre: String, historialAcademico: int)
+    +getNombre(): String
+    +getHistorialAcademico(): int
+  }
+
+  interface Inscripcion {
+    +inscribir(estudiante: Estudiante, carrera: String): void
+  }
+
+  class InscripcionBasica {
+    -universidad: Universidad
+    +InscripcionBasica(universidad: Universidad)
+    +inscribir(estudiante: Estudiante, carrera: String): void
+  }
+
+  class InscripcionConHistorial {
+    +inscribir(estudiante: Estudiante, carrera: String): void
+  }
+
+  Estudiante --> InscripcionBasica : usa
+  InscripcionBasica <|-- InscripcionConHistorial
+  InscripcionBasica -- Universidad : usa
+  Inscripcion <|.. InscripcionBasica
+}
+@enduml
