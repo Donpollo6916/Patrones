@@ -1,0 +1,17 @@
+@startuml
+actor Usuario
+participant GestorInscripcion
+participant Estudiante
+participant InscripcionConHistorial
+participant Universidad
+participant Notificador
+
+Usuario -> GestorInscripcion : Ingresar nombre y historial académico
+GestorInscripcion -> Estudiante : Crear Estudiante
+GestorInscripcion -> Usuario : Ingresar carrera
+GestorInscripcion -> InscripcionConHistorial : inscribir(estudiante, carrera)
+InscripcionConHistorial -> Estudiante : getHistorialAcademico()
+InscripcionConHistorial -> Universidad : inscribirEstudiante(estudiante, carrera)
+Universidad -> Notificador : notificarInscripcion(estudiante, carrera, exito)
+Notificador -> Usuario : Mostrar resultado de inscripción
+@enduml
